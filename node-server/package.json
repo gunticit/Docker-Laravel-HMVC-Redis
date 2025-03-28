@@ -1,0 +1,15 @@
+{
+    "name": "socket-server",
+    "version": "1.0.0",
+    "description": "Socket.IO server for Laravel chat",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "elevenlabs": "^1.55.0",
+        "express": "^4.18.2",
+        "redis": "^4.6.7",
+        "socket.io": "^4.7.2"
+    }
+}
