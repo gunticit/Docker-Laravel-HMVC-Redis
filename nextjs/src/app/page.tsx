@@ -1,6 +1,22 @@
+'use client'
+
+import { Button } from "@/components/ui/button";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import Image from "next/image";
+import { ClipboardEvent, useState } from "react";
 
 export default function Home() {
+  const [otp, setOtp] = useState("");
+  const handleOtp = (event: ClipboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const pastedData = event.clipboardData.getData("text").replace(/-/g, ""); // Loại bỏ dấu "-"
+    setOtp(pastedData);
+  }
+  const handleOtpChange = (value: string) => {
+    if(/^[a-zA-Z0-9]*$/.test(value)){
+      setOtp(value);
+    }
+  }
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -95,8 +111,23 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Go to nextjs.org →
+            g →
         </a>
+        <InputOTP maxLength={6} value={otp} onChange={handleOtpChange} onPaste={handleOtp}>
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+          </InputOTPGroup>
+          <InputOTPSeparator />
+          <InputOTPGroup>
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
+
+      <Button className="p-5 test-class" variant={'link'}>Gửi</Button>
       </footer>
     </div>
   );
