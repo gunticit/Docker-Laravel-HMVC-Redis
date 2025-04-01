@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $modulePaths = app_path('Modules');
+        
+        if(file_exists($modulePaths)) {
+            $modules = scandir($modulePaths);
+            foreach($modules as $module) {
+                if(is_dir($modulePaths . '/' . $module) && $module !== '.' && $module !== '..') {
+                    View::addNamespace($module, $modulePaths . '/' . $module . '/Views');
+                }
+            }
+        }
     }
 }
