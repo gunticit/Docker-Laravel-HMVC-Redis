@@ -31,6 +31,21 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - ./db_data:/var/lib/postgresql/data
+  
+  nextjs_app:
+    build:
+      context: ./nextjs
+      dockerfile: Dockerfile
+    container_name: nextjs_app
+    working_dir: /usr/src/app/nextjs
+    volumes:
+      - ./nextjs:/usr/src/app/nextjs
+    ports:
+      - "3000:3000"
+    depends_on:
+      - laravel_app
+    networks:
+      - app-network
 
   webserver:
     image: nginx:latest
