@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Support\ServiceProvider;
-class RepositoryServiceProvider extends ServiceProvider
+use function app_path;
+
+/**
+ * @property \Illuminate\Contracts\Foundation\Application $app
+ */
+class RepositoriesProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -28,14 +34,15 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $modulePaths = app_path('Modules');
         $modules = [];
+        $moduleNames = [];
         if(file_exists($modulePaths)) {
             $modules = scandir($modulePaths);
             foreach($modules as $module) {
                 if(is_dir($modulePaths . '/' . $module) && $module !== '.' && $module !== '..') {
-                    $modules[] = $module;
+                    $moduleNames[] = $module;
                 }
             }
         }
-        return $modules;
+        return $moduleNames;
     }
 }
